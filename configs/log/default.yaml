@@ -1,0 +1,19 @@
+# Logging frequency
+print_freq: 100
+save_freq: 50
+eval_freq: 5
+debug: False
+
+# Paths
+ckpt_dir: ${output_dir}/${job_name}/checkpoints/
+submitit_dir: ${output_dir}/${job_name}/logs/
+result_dir: ${output_dir}/${job_name}/results/
+suffix: ''
+
+# Logging
+use_wandb: False
+wandb_dir: ${output_dir}/${job_name}/wandb/
+wandb_entity: 
+wandb_project: lmim
+wandb_watch_freq: 0
+ckpt_save_list: []

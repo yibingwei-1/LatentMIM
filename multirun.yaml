@@ -1,0 +1,265 @@
+hydra:
+  run:
+    dir: .
+  sweep:
+    dir: .
+    subdir: .
+  launcher:
+    _target_: hydra._internal.core_plugins.basic_launcher.BasicLauncher
+  sweeper:
+    _target_: hydra._internal.core_plugins.basic_sweeper.BasicSweeper
+    max_batch_size: null
+    params: null
+  help:
+    app_name: ${hydra.job.name}
+    header: '${hydra.help.app_name} is powered by Hydra.
+
+      '
+    footer: 'Powered by Hydra (https://hydra.cc)
+
+      Use --hydra-help to view Hydra specific help
+
+      '
+    template: '${hydra.help.header}
+
+      == Configuration groups ==
+
+      Compose your configuration from those groups (group=option)
+
+
+      $APP_CONFIG_GROUPS
+
+
+      == Config ==
+
+      Override anything in the config (foo.bar=value)
+
+
+      $CONFIG
+
+
+      ${hydra.help.footer}
+
+      '
+  hydra_help:
+    template: 'Hydra (${hydra.runtime.version})
+
+      See https://hydra.cc for more info.
+
+
+      == Flags ==
+
+      $FLAGS_HELP
+
+
+      == Configuration groups ==
+
+      Compose your configuration from those groups (For example, append hydra/job_logging=disabled
+      to command line)
+
+
+      $HYDRA_CONFIG_GROUPS
+
+
+      Use ''--cfg hydra'' to Show the Hydra config.
+
+      '
+    hydra_help: ???
+  hydra_logging:
+    version: 1
+    formatters:
+      simple:
+        format: '[%(asctime)s][HYDRA] %(message)s'
+    handlers:
+      console:
+        class: logging.StreamHandler
+        formatter: simple
+        stream: ext://sys.stdout
+    root:
+      level: INFO
+      handlers:
+      - console
+    loggers:
+      logging_example:
+        level: DEBUG
+    disable_existing_loggers: false
+  job_logging:
+    version: 1
+    formatters:
+      simple:
+        format: '[%(asctime)s][%(name)s][%(levelname)s] - %(message)s'
+    handlers:
+      console:
+        class: logging.StreamHandler
+        formatter: simple
+        stream: ext://sys.stdout
+      file:
+        class: logging.FileHandler
+        formatter: simple
+        filename: ${hydra.runtime.output_dir}/${hydra.job.name}.log
+    root:
+      level: INFO
+      handlers:
+      - console
+      - file
+    disable_existing_loggers: false
+  env: {}
+  mode: MULTIRUN
+  searchpath: []
+  callbacks: {}
+  output_subdir: .hydra
+  overrides:
+    hydra:
+    - hydra.mode=MULTIRUN
+    task:
+    - worker=main_lmim
+    - job_name=latentMIM_${encoder}_bs${batch_size}x${env.ngpu}x${accum_iter}_blr${blr}x${min_lr_frac}_ep${epochs}_${dataset}_id${env.seed}
+    - encoder=vit_base
+    - decoder_depth=3
+    - epochs=300
+    - warmup_epochs=30
+    - blr=1.5e-4
+    - weight_decay=0.05
+    - min_lr_frac=0.25
+    - batch_size=128
+    - accum_iter=4
+    - env.ngpu=2
+    - env.seed=2
+    - dataset=imagenet100
+    - resume=True
+    - data_path=/home/yibingwei/dataset/ILSVRC2012
+    - output_dir=/home/yibingwei/checkpoints/mae2cl
+    - env.slurm=False
+    - env.workers=30
+    - env.distributed=True
+    - env.slurm_partition=morgadolab
+    - env.mem_gb=100
+    - env.slurm_timeout=100
+    - log.use_wandb=False
+    - log.wandb_entity=pmorgado
+    - log.wandb_project=mae2cl
+    - log.print_freq=100
+    - log.eval_freq=1
+    - log.wandb_watch_freq=0
+  job:
+    name: launcher
+    chdir: null
+    override_dirname: accum_iter=4,batch_size=128,blr=1.5e-4,data_path=/home/yibingwei/dataset/ILSVRC2012,dataset=imagenet100,decoder_depth=3,encoder=vit_base,env.distributed=True,env.mem_gb=100,env.ngpu=2,env.seed=2,env.slurm=False,env.slurm_partition=morgadolab,env.slurm_timeout=100,env.workers=30,epochs=300,job_name=latentMIM_${encoder}_bs${batch_size}x${env.ngpu}x${accum_iter}_blr${blr}x${min_lr_frac}_ep${epochs}_${dataset}_id${env.seed},log.eval_freq=1,log.print_freq=100,log.use_wandb=False,log.wandb_entity=pmorgado,log.wandb_project=mae2cl,log.wandb_watch_freq=0,min_lr_frac=0.25,output_dir=/home/yibingwei/checkpoints/mae2cl,resume=True,warmup_epochs=30,weight_decay=0.05,worker=main_lmim
+    id: ???
+    num: ???
+    config_name: lmim
+    env_set: {}
+    env_copy: []
+    config:
+      override_dirname:
+        kv_sep: '='
+        item_sep: ','
+        exclude_keys: []
+  runtime:
+    version: 1.3.2
+    version_base: '1.1'
+    cwd: /home/yibingwei/project/LatentMIM
+    config_sources:
+    - path: hydra.conf
+      schema: pkg
+      provider: hydra
+    - path: /home/yibingwei/project/LatentMIM/configs
+      schema: file
+      provider: main
+    - path: ''
+      schema: structured
+      provider: schema
+    output_dir: ???
+    choices:
+      log: default
+      env: default
+      hydra: default
+      hydra/env: default
+      hydra/callbacks: null
+      hydra/job_logging: default
+      hydra/hydra_logging: default
+      hydra/hydra_help: default
+      hydra/help: default
+      hydra/sweeper: basic
+      hydra/launcher: basic
+      hydra/output: default
+  verbose: false
+env:
+  workers: 30
+  world_size: 1
+  rank: 0
+  dist_url: tcp://localhost:40012
+  dist_backend: nccl
+  port: 40012
+  node: localhost
+  distributed: true
+  seed: 2
+  gpu: null
+  ngpu: 2
+  mem_gb: 100
+  pin_mem: true
+  slurm: false
+  slurm_suffix: ''
+  slurm_partition: morgadolab
+  slurm_timeout: 100
+  nodelist: ''
+  exclude: ''
+log:
+  print_freq: 100
+  save_freq: 50
+  eval_freq: 1
+  debug: false
+  ckpt_dir: ${output_dir}/${job_name}/checkpoints/
+  submitit_dir: ${output_dir}/${job_name}/logs/
+  result_dir: ${output_dir}/${job_name}/results/
+  suffix: ''
+  use_wandb: false
+  wandb_dir: ${output_dir}/${job_name}/wandb/
+  wandb_entity: pmorgado
+  wandb_project: mae2cl
+  wandb_watch_freq: 0
+  ckpt_save_list: []
+worker: main_lmim
+output_dir: /home/yibingwei/checkpoints/mae2cl
+job_name: latentMIM_${encoder}_bs${batch_size}x${env.ngpu}x${accum_iter}_blr${blr}x${min_lr_frac}_ep${epochs}_${dataset}_id${env.seed}
+dataset: imagenet100
+data_path: /home/yibingwei/dataset/ILSVRC2012
+encoder: vit_base
+patch_size: 16
+decoder_depth: 3
+target_depth: 12
+target_mom: 0.99
+target_update_freq: 1
+loss: infonce_patches
+tau: 0.2
+use_proj: false
+drop: 0.0
+attn_drop: 0.0
+drop_path: 0.0
+input_size: 224
+min_crop: 0.2
+grid_size: 14
+num_vis: 20
+num_rec_out: 0
+patch_gap: 4
+avg_vis_mask_token: true
+avg_sim_coeff: 0
+sim_init: 0.75
+sim_end: 0.25
+mask_target: true
+freeze_pe: true
+proj:
+  mlp_dim: 4096
+  mlp_depth: 3
+epochs: 300
+warmup_epochs: 30
+start_epoch: 0
+batch_size: 128
+weight_decay: 0.05
+blr: 0.00015
+accum_iter: 4
+lr: null
+min_lr_frac: 0.25
+resume: true
+knn_eval_only: false
+eval_freq: 10

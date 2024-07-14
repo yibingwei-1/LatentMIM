@@ -1,0 +1,54 @@
+defaults:
+  - hydra: default
+  - env: default
+  - log: default
+
+worker: main_lmim
+output_dir: checkpoints
+job_name: lmimo_base
+dataset: imagenet100
+data_path: /path/to/imagenet
+
+encoder: vit_base
+patch_size: 16
+decoder_depth: 3
+target_depth: 12
+target_mom: 0.99
+target_update_freq: 1
+loss: infonce_patches
+tau: 0.2
+use_proj: False
+
+drop: 0.
+attn_drop: 0.
+drop_path: 0.
+
+input_size: 224
+min_crop: 0.2
+grid_size: 14
+num_vis: 20
+patch_gap: 4
+avg_vis_mask_token: True # initialize the mask token with postion-weighted visible
+avg_sim_coeff: 0 
+sim_init: 0.75
+sim_end: 0.25
+mask_target: True
+freeze_pe: True
+
+proj:
+  mlp_dim: 4096
+  mlp_depth: 3
+
+epochs: 300
+warmup_epochs: 30
+start_epoch: 0
+batch_size: 128
+weight_decay: 0.05
+blr: 1.5e-4
+accum_iter: 4
+lr:
+min_lr_frac: 0.25
+resume: True
+
+knn_eval_only: False
+eval_freq: 10
