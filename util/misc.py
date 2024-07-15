@@ -252,7 +252,6 @@ def init_distributed_mode(local_rank, args):
         args.env.rank = 0
         return
 
-    print(args.env.dist_url, args.env.world_size, args.env.rank, flush=True)
     dist.init_process_group(backend='nccl', init_method=args.env.dist_url,
                             world_size=args.env.world_size, rank=args.env.rank)
 

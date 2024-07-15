@@ -5,7 +5,7 @@ defaults:
 
 worker: main_lmim
 output_dir: checkpoints
-job_name: lmimo_base
+job_name: latentMIM
 dataset: imagenet100
 data_path: /path/to/imagenet
 

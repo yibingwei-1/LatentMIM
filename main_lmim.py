@@ -136,7 +136,7 @@ def main_worker(local_rank, args):
     print("Model = %s" % str(model_without_ddp))
 
     if args.env.distributed:
-        model = torch.nn.parallel.DistributedDataParallel(model, device_ids=[args.env.gpu],find_unused_parameters=True)
+        model = torch.nn.parallel.DistributedDataParallel(model, device_ids=[args.env.gpu],find_unused_parameters=False)
         model_without_ddp = model.module
 
     # following timm: set wd as 0 for bias and norm layers

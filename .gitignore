@@ -158,11 +158,9 @@ output_dir/
 
 # vscode
 .vscode/
-arch_mae
-arch_mclr_m0
-arch_mclr_m75
-arch_moco
-arch_mclr_m0_bn
+
+# hydra
+.hydra/
 
 # image
 *.png
