@@ -3,6 +3,10 @@
 <a href='https://yibingwei-1.github.io/projects/lmim/lmim.html'><img src='https://img.shields.io/badge/Project-Page-Green'></a> &nbsp;
 <a href="https://opensource.org/licenses/MIT"><img src="https://img.shields.io/badge/License-MIT-yellow.svg"></a>
 
+<p align="center">
+  <img src="./figs/lmim_overview.png" alt="drawing" width="100%"/>
+</p>
+
 ## Pre-trained Model
 <table>
   <tr>
