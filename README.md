@@ -70,6 +70,7 @@ Each point in the t-SNE plot represents a patch in the image, color-coded by the
 * torchvision
 * Other dependencies: hydra-core, numpy, scipy, submitit, wandb, timm
 
+### Multi-GPU training via Slurm
 ```bash
 PYTHONPATH=. python launcher.py --config-name=lmim \
   worker=main_lmim \
