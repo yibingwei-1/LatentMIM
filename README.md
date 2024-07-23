@@ -12,8 +12,19 @@
 
 Latent Masked Image Modeling (Latent MIM) is designed to learn **high-level** and **region-aware semantic** representations by reconstructing masked regions of image features in latent space.
 
-We identified and addressed <span style="color: darkred;">four critical challenges</span> in Latent MIM  that could lead to trivial solutions, thereby unlocking its potential to generate rich, high-level semantic representations  while maintaining the diverse patch-wise representations characteristic of MIM approaches. 
+We identified and addressed *four critical challenges* in Latent MIM  that could lead to trivial solutions, thereby unlocking its potential to generate rich, high-level semantic representations  while maintaining the diverse patch-wise representations characteristic of MIM approaches. 
 
+<details> <summary>Challengs of Latent MIM</summary>
+
+1. Joint online/target optimization results in representation collapse.
+2. Direct reconstruction is conducive to trivial solutions.
+3. Effective learning requires low correlation between visible and target patches.
+4. Decoder must be designed for latent reconstruction with latent conditioning.
+
+🌼Please refer to the paper for more detailed analysis.
+</details>
+
+<br>
 Additionally, Latent MIM offers several advantages over previous self-supervised learning methods:
 
 - It doesn't require additional training objectives like global contrastive loss or pixel reconstrucion to stablize the traning.
