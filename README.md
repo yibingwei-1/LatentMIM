@@ -1,5 +1,5 @@
 # Towards Latent Masked Image Modeling for Self-Supervised Visual Representation Learning (ECCV 2024)
-<a href="https://arxiv.org/pdf/2407.15837"><img src="https://img.shields.io/badge/arXiv-2008.00951-b31b1b.svg"></a> &nbsp;
+<a href="https://arxiv.org/pdf/2407.15837"><img src="https://img.shields.io/badge/arXiv-2407.15837-b31b1b.svg"></a> &nbsp;
 <a href='https://yibingwei-1.github.io/projects/lmim/lmim.html'><img src='https://img.shields.io/badge/Project-Page-Green'></a> &nbsp;
 <a href="https://opensource.org/licenses/MIT"><img src="https://img.shields.io/badge/License-MIT-yellow.svg"></a>
 
